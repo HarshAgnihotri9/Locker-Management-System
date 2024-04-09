@@ -85,23 +85,27 @@ const loginuser = async (req, res) => {
     // console.log(user);
 
     // loggedIn(existingUser.email);
-    res
-      // .cookie("token", token)
-      .status(200)
-      .json({ message: "Logged in sucessfully", token: token, error: false });
+    return (
+      res
+        // .cookie("token", token)
+        .status(200)
+        .json({ message: "Logged in sucessfully", token: token, error: false })
+    );
   } catch (error) {
-    res.status(500).json({ Error: true, Message: error });
+    return res.status(500).json({ Error: true, Message: error });
   }
 };
 
 const profileDetails = async (req, res) => {
   try {
     const user = await userModel.findOne({ username: req.username });
+    console.log(user);
 
-    res
+    return res
       .status(200)
       .json({ message: "Get user profile details", ProfileDetails: user });
   } catch (err) {
+    console.log("hey");
     res.status(500).json({ Error: true, Message: err });
   }
 };
@@ -131,7 +135,7 @@ const updateProfile = async (req, res) => {
 
     // console.log("error3");
   } catch (err) {
-    res.status(400).json({ Error: err });
+    return res.status(400).json({ Error: err });
     // console.log("error4");
   }
 };

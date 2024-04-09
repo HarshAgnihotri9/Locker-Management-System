@@ -5,22 +5,6 @@ dotenv.config();
 const sk = process.env.SECRET_KEY;
 
 const auth = (req, res, next) => {
-  // try {
-  //   let token = req.headers.authorization;
-  //   if (token) {
-  //     return jwt.verify(token, sk, function (err, decoded) {
-  //       if (err) {
-  //         return res.json({
-  //           success: false,
-  //           message: "Failed to authenticate token.",
-  //           error: err,
-  //         });
-  //       }
-  //       req.username = decoded;
-  //       return next();
-  //     });
-  //   }
-  // }
   try {
     let token = req.headers.authorization;
     // const updatedata = async () => {
@@ -41,13 +25,13 @@ const auth = (req, res, next) => {
       req.username = user.username;
       req.token = token;
     } else {
-      res.status(401).json({ message: "Unauthorized User" });
+      return res.status(401).json({ message: "Unauthorized User" });
     }
 
     next();
   } catch (error) {
     console.log(error);
-    res.status(401).json({ error: true, message: "Unauthorizedd User" });
+    return res.status(401).json({ error: true, message: "Unauthorizedd User" });
   }
 };
 
