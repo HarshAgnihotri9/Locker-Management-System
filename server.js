@@ -19,36 +19,6 @@ app.get("/", (req, res) => {
   res.send("hiii everyone");
 });
 
-app.get("/api/user/feacher", (req, res) => {
-  const feacher = {
-    product1: {
-      img: "https://i.imgur.com/xdbHo4E.png",
-      heading: "Women,bag",
-      heading2: "Women leather bag",
-      discription:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero,possimus nostrum",
-      price: "$970",
-    },
-    product2: {
-      img: "https://i.ibb.co/gD9G8M4/heels.png",
-      heading: "Heels",
-      heading2: "Women Heels",
-      discription:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero,possimus nostrum",
-      price: "$350",
-    },
-    product3: {
-      img: "https://i.ibb.co/F0s7cPh/th-removebg-preview.png",
-      heading: "Shoes",
-      heading2: "Mens Shoes",
-      discription:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero,possimus nostrum",
-      price: "$400",
-    },
-  };
-  res.send(feacher);
-});
-
 // const mongoose = require('mongoose');
 
 const port = process.env.PORT;

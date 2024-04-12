@@ -3,6 +3,7 @@ const userModel = require("../MongoModel/Usermodel.js");
 const bcrypt = require("bcrypt");
 const { validateEmail } = require("../utils/validation");
 const jwt = require("jsonwebtoken");
+const cokkieparser = require("cookie-parser");
 // const { validatePassword } = require("../utils/passwordvalidate.js");
 // const cokie = require("cook");
 // const { loggedIn } = require("../Mail/MailAlert.js");
@@ -85,12 +86,10 @@ const loginuser = async (req, res) => {
     // console.log(user);
 
     // loggedIn(existingUser.email);
-    return (
-      res
-        // .cookie("token", token)
-        .status(200)
-        .json({ message: "Logged in sucessfully", token: token, error: false })
-    );
+    return res
+      .cookie("token", token)
+      .status(200)
+      .json({ message: "Logged in sucessfully", token: token, error: false });
   } catch (error) {
     return res.status(500).json({ Error: true, Message: error });
   }
@@ -113,20 +112,23 @@ const profileDetails = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id);
+    // console.log(id);
     const { username, email, password } = req.body;
+    // console.log(username);
 
     if (!validateEmail(email)) {
+      // console.log("email ");
       return res.status(400).json({ message: "Invalid email address" });
     }
     user = await userModel.findByIdAndUpdate(id, {
-      username,
-      email,
+      username: username,
+      email: email,
       password: await bcrypt.hash(password, 10),
       // password: bcrypt.hash(password, 10),
     });
     console.log("error");
     if (!user) {
+      // console.log("error1");
       return res.status(400).json({ Error: true, Message: "user not exist" });
     }
     // console.log("error2");
@@ -135,9 +137,20 @@ const updateProfile = async (req, res) => {
 
     // console.log("error3");
   } catch (err) {
-    return res.status(400).json({ Error: err });
+    res.status(400).json({ Error: err });
     // console.log("error4");
   }
 };
 
-module.exports = { signUpUser, loginuser, profileDetails, updateProfile };
+const logoutUser = async (req, res) => {
+  res.clearCookie("token");
+  res.send("logout");
+};
+
+module.exports = {
+  signUpUser,
+  loginuser,
+  profileDetails,
+  updateProfile,
+  logoutUser,
+};
