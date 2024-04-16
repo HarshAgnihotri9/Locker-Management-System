@@ -1,7 +1,7 @@
 "use strict";
 
-// import nodemailer from "nodemailer";
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
+// const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -96,5 +96,5 @@ const lockerRequest = function (userEmail) {
 };
 const mailAlerts = { wrongAlert, loggedIn, signupAlert, lockerRequest, otp };
 
-// export default mailAlerts;
-module.exports = { mailAlerts };
+export default mailAlerts;
+// module.exports = { mailAlerts };

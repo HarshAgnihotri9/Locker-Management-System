@@ -1,5 +1,6 @@
 // const { boolean } = require("joi");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const schema = mongoose.Schema;
 
 const AdminSchema = new schema(
@@ -25,4 +26,5 @@ const AdminSchema = new schema(
 
 const Admin = mongoose.model("Admin", AdminSchema);
 
-module.exports = Admin;
+// module.exports = Admin;
+export default Admin;

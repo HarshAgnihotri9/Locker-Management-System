@@ -1,12 +1,17 @@
-const express = require("express");
-const { auth } = require("../middleware/Auth");
-const {
-  signUpUser,
-  loginuser,
-  profileDetails,
-  updateProfile,
-  logoutUser,
-} = require("../Controller/UserController");
+// const express = require("express");
+import express from "express";
+// const { auth } = require("../middleware/Auth");
+import auth from "../middleware/Auth.js";
+// const {
+//   signUpUser,
+//   loginuser,
+//   profileDetails,
+//   updateProfile,
+//   logoutUser,
+// } = require("../Controller/UserController");
+import user from "../Controller/UserController.js";
+const { signUpUser, loginuser, profileDetails, updateProfile, logoutUser } =
+  user;
 
 const router = express.Router();
 
@@ -16,4 +21,5 @@ router.get("/profile", auth, profileDetails);
 router.put("/updateProfile/:id", updateProfile);
 router.get("/logout", logoutUser);
 
-module.exports = router;
+// module.exports = router;
+export default router;

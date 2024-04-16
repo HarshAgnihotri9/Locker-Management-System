@@ -1,9 +1,12 @@
-const AdminModel = require("../MongoModel/AdminModel");
-const userModel = require("../MongoModel/Usermodel.js");
-
-const bcrypt = require("bcrypt");
-const { validateEmail } = require("../utils/validation");
-const jwt = require("jsonwebtoken");
+// const AdminModel = require("../MongoModel/AdminModel");
+// const userModel = require("../MongoModel/Usermodel.js");
+import AdminModel from "../MongoModel/AdminModel.js";
+import userModel from "../MongoModel/Usermodel.js";
+// const bcrypt = require("bcrypt");
+// const { validateEmail } = require("../utils/validation");
+import validateEmail from "../utils/validation.js";
+// const jwt = require("jsonwebtoken")
+import jwt from "jsonwebtoken";
 const AdminDetails = async (req, res) => {
   try {
     const admin = await AdminModel.find({ username: req.username });
@@ -40,16 +43,16 @@ const signUpAdmin = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    bcrypt.hash(password, 10, async (err, hash) => {
-      if (err) {
-        res.status(400).json({ message: "Problem in encryption" });
-      }
+    // bcrypt.hash(password, 10, async (err, hash) => {
+    //   if (err) {
+    //     res.status(400).json({ message: "Problem in encryption" });
+    //   }
 
-      const result = await AdminModel.create({
-        email: email,
-        password: hash,
-        username: username,
-      });
+    // });
+    const result = await AdminModel.create({
+      email: email,
+      password: hash,
+      username: username,
     });
     res.send("Account Creation Done");
 
@@ -102,4 +105,7 @@ const loginAdmin = async (req, res) => {
   }
 };
 
-module.exports = { AdminDetails, signUpAdmin, loginAdmin };
+// module.exports = { AdminDetails, signUpAdmin, loginAdmin };
+
+const Aadmin = { AdminDetails, signUpAdmin, loginAdmin };
+export default Aadmin;

@@ -1,12 +1,18 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const cors = require("cors");
+// const express = require("express");
+import express from "express";
+// const mongoose = require("mongoose");
+import mongoose from "mongoose";
+// const dotenv = require("dotenv");
+import dotenv from "dotenv";
+// const cors = require("cors");
+import cors from "cors";
 // const cookieParser = require("cookie-parser");
+import router from "../backend/Routes/UserRouter.js";
+import adminRouter from "../backend/Routes/AdminRoute.js";
 // const { feacher } = require("../backend/data/data1.js");
 dotenv.config();
-const router = require("../backend/Routes/UserRouter.js");
-const adminRouter = require("../backend/Routes/AdminRoute.js");
+// const router = require("../backend/Routes/UserRouter.js");
+// const adminRouter = require("../backend/Routes/AdminRoute.js");
 
 const app = express();
 app.use(express.json());

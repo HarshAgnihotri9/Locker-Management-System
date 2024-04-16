@@ -1,6 +1,9 @@
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-const userModel = require("../MongoModel/Usermodel");
+// const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
+// const dotenv = require("dotenv");
+import dotenv from "dotenv";
+// const userModel = require("../MongoModel/Usermodel");
+// import userModel from '../MongoModel/Usermodel.js'
 dotenv.config();
 const adminSecret = process.env.ADMIN_SECRET_KEY;
 
@@ -25,4 +28,5 @@ const Adminauth = (req, res, next) => {
   }
 };
 
-module.exports = { Adminauth };
+// module.exports = { Adminauth };
+export default Adminauth;

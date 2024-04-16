@@ -1,10 +1,17 @@
 // const userModel = require("../models/User");
-const userModel = require("../MongoModel/Usermodel.js");
-const bcrypt = require("bcrypt");
-const { validateEmail } = require("../utils/validation");
-const jwt = require("jsonwebtoken");
-const cokkieparser = require("cookie-parser");
-const { mailAlerts } = require("../Mail/MailAlert.js");
+// const userModel = require("../MongoModel/Usermodel.js");
+import userModel from "../MongoModel/Usermodel.js";
+// const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
+// const { validateEmail } = require("../utils/validation");
+import validateEmail from "../utils/validation.js";
+// const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
+// const cokkieparser = require("cookie-parser");
+import cookieParser from "cookie-parser";
+// const { mailAlerts } = require("../Mail/MailAlert.js");
+import mailAlerts from "../Mail/MailAlert.js";
+// const { string } = require("joi");
 const { wrongAlert, loggedIn, signupAlert, lockerRequest, otp } = mailAlerts;
 
 // const { validatePassword } = require("../utils/passwordvalidate.js");
@@ -27,18 +34,19 @@ const signUpUser = async (req, res) => {
     }
 
     // if (validatePassword(password))
-    bcrypt.hash(password, 10, async (err, hash) => {
-      if (err) {
-        res.status(400).json({ message: "Problem in encryption" });
-      }
-      // console.log("hey");
+    // bcrypt.hash(password, 10, async (err, hash) => {
+    //   if (err) {
+    //     res.status(400).json({ message: "Problem in encryption" });
+    //   }
+    //   // console.log("hey");
+    // });
 
-      const result = await userModel.create({
-        email: email,
-        password: hash,
-        username: username,
-      });
+    const result = await userModel.create({
+      email: email,
+      password: password,
+      username: username,
     });
+    console.log(result);
     // const token = jwt.sign(
     //   { username: req.body.username }, //payload
     //   process.env.SECRET_KEY,
@@ -72,10 +80,14 @@ const loginuser = async (req, res) => {
     }
     // const existingUser = await userModel.findOne({ username: username });
 
-    const cheackpassword = await bcrypt.compare(
-      password,
-      existingUser.password
-    );
+    // const cheackpassword = await bcrypt.compare(
+    //   password,
+    //   existingUser.password
+    // );
+    let cheackpassword;
+    if (existingUser.password == password) {
+      cheackpassword = true;
+    }
     console.log(cheackpassword);
 
     // if (cheackpassword != password) {
@@ -167,10 +179,19 @@ const logoutUser = async (req, res) => {
   res.send("logout");
 };
 
-module.exports = {
+// module.exports = {
+//   signUpUser,
+//   loginuser,
+//   profileDetails,
+//   updateProfile,
+//   logoutUser,
+// };
+const user = {
   signUpUser,
   loginuser,
   profileDetails,
   updateProfile,
   logoutUser,
 };
+
+export default user;
