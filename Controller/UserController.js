@@ -4,6 +4,9 @@ const bcrypt = require("bcrypt");
 const { validateEmail } = require("../utils/validation");
 const jwt = require("jsonwebtoken");
 const cokkieparser = require("cookie-parser");
+const { mailAlerts } = require("../Mail/MailAlert.js");
+const { wrongAlert, loggedIn, signupAlert, lockerRequest, otp } = mailAlerts;
+
 // const { validatePassword } = require("../utils/passwordvalidate.js");
 // const cokie = require("cook");
 // const { loggedIn } = require("../Mail/MailAlert.js");
@@ -12,6 +15,7 @@ const cokkieparser = require("cookie-parser");
 
 const signUpUser = async (req, res) => {
   try {
+    // console.log("hiiz");
     const { username, email, password } = req.body;
 
     if (!validateEmail(email))
@@ -27,6 +31,7 @@ const signUpUser = async (req, res) => {
       if (err) {
         res.status(400).json({ message: "Problem in encryption" });
       }
+      // console.log("hey");
 
       const result = await userModel.create({
         email: email,
@@ -39,6 +44,8 @@ const signUpUser = async (req, res) => {
     //   process.env.SECRET_KEY,
     //   { expiresIn: "1m" }
     // );
+    // console.log("hiii");
+    signupAlert(email);
 
     res.json({ Message: "Account Creation Done" });
 
@@ -61,6 +68,7 @@ const loginuser = async (req, res) => {
     const existingUser = await userModel.findOne({ username: username });
     if (!existingUser) {
       return res.status(400).json({ message: "User not exists" });
+      wrongAlert(email);
     }
     // const existingUser = await userModel.findOne({ username: username });
 
@@ -75,22 +83,34 @@ const loginuser = async (req, res) => {
     // }
 
     if (!cheackpassword) {
+      wrongAlert(existingUser.email);
       return res.status(400).json({ message: "Password Incoorect" });
     }
+    let otpp = Math.floor(1000 + Math.random() * 1000);
+    otpp = otpp.toString();
+    console.log(otpp);
+
+    otp(existingUser.email, otpp);
+    // console.log("j");
     const token = jwt.sign(
       { username: existingUser.username, id: existingUser._id }, //payload
       process.env.SECRET_KEY,
       { expiresIn: "10m" }
     );
+    // console.log("k");
 
     // console.log(user);
 
+    // loggedIn(email);
+
     // loggedIn(existingUser.email);
+    loggedIn(existingUser.email);
     return res
       .cookie("token", token)
       .status(200)
       .json({ message: "Logged in sucessfully", token: token, error: false });
   } catch (error) {
+    wrongAlert(existingUser.email);
     return res.status(500).json({ Error: true, Message: error });
   }
 };
