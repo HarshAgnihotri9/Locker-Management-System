@@ -94,7 +94,29 @@ const lockerRequest = function (userEmail) {
     }
   });
 };
-const mailAlerts = { wrongAlert, loggedIn, signupAlert, lockerRequest, otp };
+const resettpassword = function (userEmail, userpassword) {
+  const UserRes = {
+    from: process.env.Admin_Mail,
+    to: userEmail,
+    subject: "password for login",
+    text: "your password for login is" + " " + "" + userpassword + "",
+  };
+  transporter.sendMail(UserRes, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+};
+const mailAlerts = {
+  wrongAlert,
+  resettpassword,
+  loggedIn,
+  signupAlert,
+  lockerRequest,
+  otp,
+};
 
 export default mailAlerts;
 // module.exports = { mailAlerts };

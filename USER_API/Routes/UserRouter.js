@@ -10,8 +10,14 @@ import auth from "../middleware/Auth.js";
 //   logoutUser,
 // } = require("../Controller/UserController");
 import user from "../Controller/UserController.js";
-const { signUpUser, loginuser, profileDetails, updateProfile, logoutUser } =
-  user;
+const {
+  signUpUser,
+  loginuser,
+  profileDetails,
+  updateProfile,
+  logoutUser,
+  resetpassword,
+} = user;
 
 const router = express.Router();
 
@@ -20,6 +26,8 @@ router.post("/login", loginuser);
 router.get("/profile", auth, profileDetails);
 router.put("/updateProfile/:id", updateProfile);
 router.get("/logout", logoutUser);
+
+router.post("/resetpassword", resetpassword);
 
 // module.exports = router;
 export default router;

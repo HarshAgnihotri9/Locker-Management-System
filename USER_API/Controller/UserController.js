@@ -11,8 +11,16 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 // const { mailAlerts } = require("../Mail/MailAlert.js");
 import mailAlerts from "../Mail/MailAlert.js";
+import { application } from "express";
 // const { string } = require("joi");
-const { wrongAlert, loggedIn, signupAlert, lockerRequest, otp } = mailAlerts;
+const {
+  wrongAlert,
+  loggedIn,
+  signupAlert,
+  lockerRequest,
+  otp,
+  resettpassword,
+} = mailAlerts;
 
 // const { validatePassword } = require("../utils/passwordvalidate.js");
 // const cokie = require("cook");
@@ -179,6 +187,13 @@ const logoutUser = async (req, res) => {
   res.send("logout");
 };
 
+const resetpassword = async (req, res) => {
+  const { email } = req.body;
+  const ress = await userModel.findOne({ email: email });
+  resettpassword(ress.email, ress.password);
+  return res.status(200).json({ message: "Password sent to the email" });
+};
+
 // module.exports = {
 //   signUpUser,
 //   loginuser,
@@ -187,6 +202,7 @@ const logoutUser = async (req, res) => {
 //   logoutUser,
 // };
 const user = {
+  resetpassword,
   signUpUser,
   loginuser,
   profileDetails,
