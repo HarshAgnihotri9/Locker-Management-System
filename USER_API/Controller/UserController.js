@@ -189,9 +189,22 @@ const logoutUser = async (req, res) => {
 
 const resetpassword = async (req, res) => {
   const { email } = req.body;
-  const ress = await userModel.findOne({ email: email });
-  resettpassword(ress.email, ress.password);
-  return res.status(200).json({ message: "Password sent to the email" });
+  if (email) {
+    try {
+      const ress = await userModel.findOne({ email: email });
+
+      if (ress != null) {
+        resettpassword(ress.email, ress.password);
+        return res.status(200).json({ message: "Password sent to the email" });
+      } else {
+        return res.status(400).json("user not found");
+      }
+    } catch (err) {
+      res.status(err);
+    }
+  } else {
+    return res.status(0).json({ Error: "Email is not there" });
+  }
 };
 
 // module.exports = {
